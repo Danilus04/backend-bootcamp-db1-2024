@@ -3,6 +3,7 @@ const { ValidationError } = require('sequelize');
 
 const { validationResultCheck } = require('../validators');
 const { validateCreateUser, validateLogin } = require('../validators/users');
+const User = require('../models/User');
 
 const router = express.Router();
 
@@ -12,7 +13,7 @@ function isUniqueEmailError(error) {
   }
 
   return error.errors.find((databaseError) => (
-    databaseError.type === 'unique violation' && databaseError.path === 'email'
+    databaseError.type === 'unique violation' && databaseError.path === 'users_email_unique'
   ));
 }
 
@@ -30,7 +31,12 @@ router.post(
     try {
       const { name, email, password } = req.body;
 
-      // TODO: implementar aqui
+      let user = await User.create({
+        name, email, password
+      });
+      user = await User.findByPk(user.id);
+
+      res.status(201).send();
     } catch (error) {
       console.warn(error);
       if (isUniqueEmailError(error)) {
