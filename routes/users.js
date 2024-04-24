@@ -34,15 +34,15 @@ router.post(
       const { name, email, password } = req.body;
 
       let user = await User.create({
-        name, email, password
+        name, email, password,
       });
       user = await User.findByPk(user.id);
 
-      res.status(201).send();
+      res.status(201).json(user);
     } catch (error) {
       console.warn(error);
       if (isUniqueEmailError(error)) {
-        res.status(402).send('E-mail já cadastrado!');
+        res.status(412).send('E-mail já cadastrado!');
         return;
       }
       res.status(500).send();
@@ -73,12 +73,10 @@ router.post(
         },
       });
 
-      if(!user) {
-        res.status(401).send('E-mail ou senha inválidos.');
-        return;
-      }
-
-      if(!comparePassword(password, user.get('password'))){
+      if (
+        !user
+        || !comparePassword(password, user.get('password'))
+      ) {
         res.status(401).send('E-mail ou senha inválidos.');
         return;
       }
@@ -88,7 +86,7 @@ router.post(
 
       const token = generateUserToken(userPayload);
 
-      res.status(200).json(token);
+      res.status(200).json({ token });
     } catch (error) {
       console.warn(error);
       res.status(500).send();
