@@ -122,7 +122,7 @@ const updateTaskConcluded = async (userId, taskId, concluded) => {
   const result = await Task.findOne({
     where: {
       id: taskId,
-      user_id: userId,
+      userId,
     },
   });
 
@@ -152,7 +152,14 @@ router.put(
 
       const { taskId } = params;
 
-      // TODO: implementar aqui
+      const task = await updateTaskConcluded(loggedUser.id, taskId, true);
+
+      if (!task) {
+        res.status(404).send('Tarefa não encontrada.');
+        return;
+      }
+
+      res.status(200).json(task);
     } catch (error) {
       console.warn(error);
       res.status(500).send();
@@ -172,7 +179,14 @@ router.put(
 
       const { taskId } = params;
 
-      // TODO: implementar aqui
+      const task = await updateTaskConcluded(loggedUser.id, taskId, false);
+
+      if (!task) {
+        res.status(404).send('Tarefa não encontrada.');
+        return;
+      }
+
+      res.status(200).json(task);
     } catch (error) {
       console.warn(error);
       res.status(500).send();
@@ -198,7 +212,56 @@ router.patch(
       const { taskId } = params;
       const { title, concluded } = body;
 
-      // TODO: implementar aqui
+      const task = await Task.findOne({
+        where: {
+          id: taskId,
+          userId: loggedUser.id,
+        },
+      });
+
+      if(!task){
+        res.status(404).send('Tarefa não encontrada.');
+        return;
+      }
+
+      await task.update({
+        title,
+        concluded,
+      })
+
+      res.status(200).json(task)
+    } catch (error) {
+      console.warn(error);
+      res.status(500).send();
+    }
+  },
+);
+
+/**
+ * Remove a tarefa do banco de dados
+ */
+router.delete(
+  '/:taskId',
+  middlewareAuthentication,
+  async (req, res) => {
+    try {
+      const { loggedUser, params } = req;
+
+      const { taskId } = params;
+
+      const deletedTasks = await Task.destroy({
+        where: {
+          id: taskId,
+          userId: loggedUser.id,
+        },
+      });
+
+      if (!deletedTasks) {
+        res.status(404).send('Tarefa não encontrada.');
+        return;
+      }
+
+      res.status(204).send();
     } catch (error) {
       console.warn(error);
       res.status(500).send();
