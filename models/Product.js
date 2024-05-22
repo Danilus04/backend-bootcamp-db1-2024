@@ -20,6 +20,10 @@ const Product = sequelize.define('Product', {
         type: DataTypes.FLOAT,
         allowNull: false
     },
+    imageUrl: {
+        type: DataTypes.STRING, // Coluna para a URL da imagem
+        allowNull: true
+    },
     categoryId: {
         type: DataTypes.INTEGER,
         references: {
@@ -37,6 +41,15 @@ const Product = sequelize.define('Product', {
         fields: ['name', 'description']
       }
     ]
+    
+});
+
+Product.belongsTo(Category, {
+    onDelete: 'NO ACTION',
+    onUpdate: 'NO ACTION',
+    foreignKey: {
+      allowNull: false,
+    },
 });
 
 module.exports = Product;
