@@ -17,6 +17,8 @@ router.get('/', async (req, res) => {
 });
 
 // Rota para criar uma nova categoria
+// Categorias serão colocadas diretamente no banco de dados
+/*
 router.post('/', async (req, res) => {
   const { name } = req.body;
 
@@ -36,6 +38,7 @@ router.post('/', async (req, res) => {
     res.status(500).json({ error: 'Erro ao criar categoria' });
   }
 });
+*/
 
 // Rota para obter uma categoria pelo ID
 router.get('/:id', async (req, res) => {
@@ -56,6 +59,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Rota para atualizar uma categoria
+/* Diretamente pelo banco de dados
 router.put('/:id', async (req, res) => {
   const categoryId = req.params.id;
   const { name } = req.body;
@@ -76,8 +80,10 @@ router.put('/:id', async (req, res) => {
     res.status(500).json({ error: 'Erro ao atualizar categoria' });
   }
 });
+*/
 
 // Rota para excluir uma categoria
+/* diretamente pelo banco de dados
 router.delete('/:id', async (req, res) => {
   const categoryId = req.params.id;
 
@@ -97,6 +103,7 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ error: 'Erro ao excluir categoria' });
   }
 });
+*/
 
 // Exporta o router para ser utilizado na aplicação principal
 module.exports = router;
