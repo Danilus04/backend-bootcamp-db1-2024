@@ -8,7 +8,6 @@ const productRouter = require('./routes/product');
 const categoryRouter = require('./routes/category');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const tasksRouter = require('./routes/tasks');
 
 const app = express();
 
@@ -32,7 +31,6 @@ app.use(cookieParser());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/tasks', tasksRouter);
 app.use('/category', categoryRouter);
 app.use('/product', productRouter);
 
