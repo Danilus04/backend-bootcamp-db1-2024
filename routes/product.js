@@ -16,6 +16,7 @@ router.get('/', async (req, res) => {
 });
 
 // Rota para criar um novo produto
+/* Criação de novo produto diretamente no banco
 router.post('/', async (req, res) => {
   const { name, description, price, categoryId } = req.body;
 
@@ -36,6 +37,7 @@ router.post('/', async (req, res) => {
     res.status(500).json({ error: 'Erro ao criar produto' });
   }
 });
+*/
 
 // Rota para obter um produto pelo ID
 router.get('/:id', async (req, res) => {
@@ -56,6 +58,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Rota para atualizar um produto
+/* Atualização de novo produto diretamente no banco
 router.put('/:id', async (req, res) => {
   const productId = req.params.id;
   const { name, description, price, categoryId } = req.body;
@@ -82,8 +85,10 @@ router.put('/:id', async (req, res) => {
     res.status(500).json({ error: 'Erro ao atualizar produto' });
   }
 });
+*/
 
 // Rota para excluir um produto
+/* exclusão de um produto diretamente no banco de dados
 router.delete('/:id', async (req, res) => {
   const productId = req.params.id;
 
@@ -103,6 +108,7 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ error: 'Erro ao excluir produto' });
   }
 });
+*/
 
 // Exporta o router para ser utilizado na aplicação principal
 module.exports = router;
