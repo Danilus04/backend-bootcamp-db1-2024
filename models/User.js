@@ -1,10 +1,12 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../database/sequelize');
+const Favorite = require('./Favorite')
 
 const { hashPassword } = require('../utils/password');
+const Product = require('./Product');
 
 const User = sequelize.define(
-  'users',
+  'Users',
   {
     id: {
       type: DataTypes.BIGINT({ unsigned: true }),
@@ -54,5 +56,12 @@ const User = sequelize.define(
     },
   },
 );
+
+
+User.associate = (models) => {
+  User.belongsToMany(Product, {as: "User", through: {model: Favorite, unique : false}, foreignKey: 'userId'});
+}
+
+
 
 module.exports = User;

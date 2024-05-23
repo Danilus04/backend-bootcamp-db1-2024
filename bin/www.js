@@ -103,9 +103,10 @@ function onListening() {
       // Em um projeto real, este tipo de coisa deve ser feito via migração de banco de dados
       // e não automaticamente pelo Sequelize.
       // Docs: https://sequelize.org/docs/v6/core-concepts/model-basics/#model-synchronization
+      sequelize.query('SET FOREIGN_KEY_CHECKS = 0');
       return sequelize.sync({ 
-        alter: true
-        //force: true 
+        //alter: true
+        force: true 
       });
     })
     .catch((error) => {

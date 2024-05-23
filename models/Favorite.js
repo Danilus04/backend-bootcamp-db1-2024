@@ -1,33 +1,30 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../database/sequelize');
-const User = require('./User');
 const Product = require('./Product');
+const User = require('./User');
 
 const Favorite = sequelize.define('Favorite', {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true
-  },
   userId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.BIGINT({ unsigned: true }) ,
     references: {
-      model: User,
+      model: 'users', // Nome da tabela de Users
       key: 'id'
     },
-    allowNull: false
+    onDelete: 'CASCADE'
   },
   productId: {
     type: DataTypes.INTEGER,
     references: {
-      model: Product,
+      model: 'products', // Nome da tabela de Products
       key: 'id'
     },
-    allowNull: false
+    onDelete: 'CASCADE'
   }
-}, {
-  createdAt: 'created_at',
-  updatedAt: 'updated_at'
 });
 
+//Favorite.belongsTo(Product);
+//Favorite.belongsTo(User);
+
+
 module.exports = Favorite;
+
