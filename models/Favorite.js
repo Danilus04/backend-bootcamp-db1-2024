@@ -4,27 +4,16 @@ const Product = require('./Product');
 const User = require('./User');
 
 const Favorite = sequelize.define('Favorite', {
-  userId: {
-    type: DataTypes.BIGINT({ unsigned: true }) ,
-    references: {
-      model: 'users', // Nome da tabela de Users
-      key: 'id'
-    },
-    onDelete: 'CASCADE'
-  },
-  productId: {
+  id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: 'products', // Nome da tabela de Products
-      key: 'id'
-    },
-    onDelete: 'CASCADE'
-  }
+    autoIncrement: true,
+    primaryKey: true
+},
 });
 
-//Favorite.belongsTo(Product);
-//Favorite.belongsTo(User);
+Product.belongsToMany(User, {through: 'Favorite'});
+User.belongsToMany(Product, {through: 'Favorite'});
 
+Favorite.belongsTo(Product)
 
 module.exports = Favorite;
-

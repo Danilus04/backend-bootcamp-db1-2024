@@ -1,8 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../database/sequelize');
 const Category = require('./Category');
-const Favorite = require('./Favorite');
-const User = require('./User');
 
 const Product = sequelize.define('Product', {
     id: {
@@ -56,10 +54,10 @@ Product.belongsTo(Category, {
 
 //
 
+/*
 Product.associate = (models) => {
     Product.belongsToMany(User, { through: Favorite, foreignKey: 'productId' });
 };
-
-
+*/
 
 module.exports = Product;

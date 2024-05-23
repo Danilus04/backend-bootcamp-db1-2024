@@ -10,17 +10,18 @@ const { Op } = require('sequelize');
 const router = express.Router();
 
 // Rota para obter todos os favoritos de um usuário
+
 router.get('/', middlewareAuthentication, async (req, res) => {
   try {
     const { loggedUser } = req;
     const favorites = await Favorite.findAll({
-      where: { userId: loggedUser.id, },
+      where: { user_id: loggedUser.id, },
       include: [Product]
-      //attributes: ['productId'],
+      
     });
     
     
-
+    
     res.json(favorites);
   } catch (error) {
     console.error('Erro ao obter favoritos:', error);
@@ -29,14 +30,15 @@ router.get('/', middlewareAuthentication, async (req, res) => {
 });
 
 // Rota para adicionar um favorito
-router.post('/:id', middlewareAuthentication, async (req, res) => {
+router.post('/:productId', middlewareAuthentication, async (req, res) => {
   try {
-    const productId = req.params.id;
-    const { loggedUser } = req;
-
+    
+    const { loggedUser, params } = req;
+    const { productId } = params;
+    // Impedir que favorite um produto inexistente
     const favorite = await Favorite.create({ 
-      userId: loggedUser.id, 
-      productId 
+      UserId: loggedUser.id, 
+      ProductId: productId,
     });
     
     res.status(201).json(favorite);
@@ -47,11 +49,16 @@ router.post('/:id', middlewareAuthentication, async (req, res) => {
 });
 
 // Rota para remover um favorito
-router.delete('/favorites/:userId/:productId', async (req, res) => {
-  const { userId, productId } = req.params;
+router.delete('/:productId', middlewareAuthentication, async (req, res) => {
   try {
+
+    const { loggedUser, params } = req;
+    const { productId } = params;
+
     const result = await Favorite.destroy({
-      where: { userId, productId }
+      where: { 
+        UserId: loggedUser.id, 
+        ProductId: productId}
     });
     if (result) {
       res.status(204).send();

@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
 
   try {
     // Verifica se a categoria existe
-    // TODO: fazer uma maneira para que no parametro seja enviado o nome da categoria e não o ID.
+    : fazer uma maneira para que no parametro seja enviado o nome da categoria e não o ID.
     const category = await Category.findByPk(categoryId);
     if (!category) {
       return res.status(400).json({ error: 'Categoria não encontrada' });
