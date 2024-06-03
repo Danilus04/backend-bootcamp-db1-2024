@@ -8,7 +8,7 @@ const Favorite = sequelize.define('Favorite', {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true
-},
+  },
 });
 
 Product.belongsToMany(User, {through: 'Favorite'});

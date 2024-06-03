@@ -46,76 +46,69 @@
 > }
 > ```
 
-## Rotas autenticadas
+### Obter todos os produtos
 
-Todas as rotas autenticadas exigem que o `token jwt` seja passado no cabeçalho (header) chamado `Authorization`.
+> GET /product
 
-### Cadastrar tarefas
+Obtém todos os produtos, incluindo suas categorias.
 
-> POST /tasks
+**Resposta de sucesso:**
+```json
+[
+  {
+    "id": 1,
+    "name": "Produto A",
+    "description": "Descrição do Produto A",
+    "price": 100.0,
+    "category": {
+      "id": 1,
+      "name": "Categoria A"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Produto B",
+    "description": "Descrição do Produto B",
+    "price": 150.0,
+    "category": {
+      "id": 2,
+      "name": "Categoria B"
+    }
+  }
+]
+```
+### Obter produto por ID
+
+> GET product/:id
+> 
+>```js
+>{
+>   "id": 1,
+>   "name": "Produto A",
+>   "description": "Descrição do Produto A",
+>   "price": 100.0,
+>   "category": {
+>     "id": 1,
+>     "name": "Categoria A"
+>   }
+>}
+>```
+
+## Rotas prívadas
+Todas as rotas autenticadas exigem que o token jwt seja passado no cabeçalho (header) chamado Authorization.
+
+### Obter produtos favoritados
+
+> GET /favorite
+
+### Adicionar produto no favoritos
+
+> POST /favirote/:idProduct
 >
-> Headers:
-> ```properties
-> Authorization: Bearer s8a7df687sadf687sadf67s98f98sdf...
-> ```
+> idProduct(Parametro): id do produto que será favoritado.
+
+### Remover produto do favoritos
+
+> DELETE /favorite/:idProduct
 >
-> Body:
-> ```json
-> {
->     "title": "Aprender Node",
->     "concluded": false
-> }
-> ```
-
-### Consultar tarefas
-
-> GET /tasks
->
-> Headers:
-> ```properties
-> Authorization: Bearer s8a7df687sadf687sadf67s98f98sdf...
-> ```
-
-### Obter tarefa por ID
-
-> GET /tasks/1
->
-> Headers:
-> ```properties
-> Authorization: Bearer s8a7df687sadf687sadf67s98f98sdf...
-> ```
-
-### Marcar tarefa como concluída
-
-> PUT /tasks/1/concluded
->
-> Headers:
-> ```properties
-> Authorization: Bearer s8a7df687sadf687sadf67s98f98sdf...
-> ```
-
-### Marcar tarefa como pendente
-
-> PUT /tasks/1/pending
->
-> Headers:
-> ```properties
-> Authorization: Bearer s8a7df687sadf687sadf67s98f98sdf...
-> ```
-
-### Atualização parcial da tarefa
-
-> PATCH /tasks/1
->
-> Headers:
-> ```properties
-> Authorization: Bearer s8a7df687sadf687sadf67s98f98sdf...
-> ```
->
-> Body:
-> ```json
-> {
->     "title": "Aprender Node",
->     "concluded": false
-> }
-> ```
+> idProduct(Parametro): id do produto que será desfavoritado.
